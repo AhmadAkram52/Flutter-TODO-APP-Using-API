@@ -15,6 +15,10 @@ class TTheme {
     elevatedButtonTheme: BtnThemes.lightElevatedBtn,
     listTileTheme: TListTimeTheme.lightTileTheme,
     textTheme: TTextTheme.lightTextTheme,
+    popupMenuTheme: PopupMenuThemeData(
+      elevation: 30,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -26,5 +30,9 @@ class TTheme {
     elevatedButtonTheme: BtnThemes.darkElevatedBtn,
     listTileTheme: TListTimeTheme.darkTileTheme,
     textTheme: TTextTheme.darkTextTheme,
+    popupMenuTheme: PopupMenuThemeData(
+      elevation: 30,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    ),
   );
 }

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:todo/Services/todo_service.dart';
+import 'package:todo/Services/service.dart';
 
 class AddTodoScreen extends StatefulWidget {
-  const AddTodoScreen({super.key});
+  final bool isEdit;
+  final String? title, description, id;
+
+  const AddTodoScreen(
+      {super.key, this.isEdit = false, this.title, this.description, this.id});
 
   @override
   State<AddTodoScreen> createState() => _AddTodoScreenState();
@@ -15,10 +19,20 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
   String desError = "";
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (widget.isEdit) {
+      titleController.text = widget.title.toString();
+      desController.text = widget.description.toString();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add List"),
+        title: widget.isEdit ? const Text("Edit") : const Text("Add List"),
         centerTitle: true,
       ),
       body: Padding(
@@ -46,12 +60,18 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(),
                 onPressed: () {
-                  submitToServer();
+                  if (widget.isEdit) {
+                    updateToServer();
+                  } else {
+                    postToServer();
+                  }
                 },
-                child: const Text(
-                  "Save",
-                  style: TextStyle(fontSize: 25),
-                ),
+                child: widget.isEdit
+                    ? const Text("Update")
+                    : const Text(
+                        "Save",
+                        style: TextStyle(fontSize: 25),
+                      ),
               )
             ],
           ),
@@ -60,7 +80,7 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
     );
   }
 
-  void submitToServer() {
+  void postToServer() {
     final String title = titleController.text.toString();
     final String description = desController.text.toString();
     if (title.isEmpty && description.isEmpty) {
@@ -74,8 +94,30 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       desError = "Fill This Field";
       setState(() {});
     } else {
-      TodoService.postTodoList(
+      TService.postTodoList(
           title: title, description: description, context: context);
+    }
+  }
+
+  void updateToServer() {
+    final String title = titleController.text.toString();
+    final String description = desController.text.toString();
+    if (title.isEmpty && description.isEmpty) {
+      titleError = "Fill This Field";
+      desError = "Fill This Field";
+      setState(() {});
+    } else if (title.isEmpty) {
+      titleError = "Fill This Field";
+      setState(() {});
+    } else if (description.isEmpty) {
+      desError = "Fill This Field";
+      setState(() {});
+    } else {
+      TService.editById(
+          id: widget.id,
+          title: title,
+          description: description,
+          context: context);
     }
   }
 }

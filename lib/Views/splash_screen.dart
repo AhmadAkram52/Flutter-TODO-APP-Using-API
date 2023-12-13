@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/Utils/tcolors.dart';
-import 'package:todo/Views/todo_list_screen.dart';
+import 'package:todo/Views/list_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

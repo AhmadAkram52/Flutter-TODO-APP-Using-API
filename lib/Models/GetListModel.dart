@@ -7,19 +7,20 @@
 
 class TodoListModel {
   TodoListModel({
-      num? code, 
-      bool? success, 
-      num? timestamp, 
-      String? message, 
-      List<Items>? items, 
-      Meta? meta,}){
+    num? code,
+    bool? success,
+    num? timestamp,
+    String? message,
+    List<Items>? items,
+    Meta? meta,
+  }) {
     _code = code;
     _success = success;
     _timestamp = timestamp;
     _message = message;
     _items = items;
     _meta = meta;
-}
+  }
 
   TodoListModel.fromJson(dynamic json) {
     _code = json['code'];
@@ -34,30 +35,41 @@ class TodoListModel {
     }
     _meta = json['meta'] != null ? Meta.fromJson(json['meta']) : null;
   }
+
   num? _code;
   bool? _success;
   num? _timestamp;
   String? _message;
   List<Items>? _items;
   Meta? _meta;
-TodoListModel copyWith({  num? code,
-  bool? success,
-  num? timestamp,
-  String? message,
-  List<Items>? items,
-  Meta? meta,
-}) => TodoListModel(  code: code ?? _code,
-  success: success ?? _success,
-  timestamp: timestamp ?? _timestamp,
-  message: message ?? _message,
-  items: items ?? _items,
-  meta: meta ?? _meta,
-);
+
+  TodoListModel copyWith({
+    num? code,
+    bool? success,
+    num? timestamp,
+    String? message,
+    List<Items>? items,
+    Meta? meta,
+  }) =>
+      TodoListModel(
+        code: code ?? _code,
+        success: success ?? _success,
+        timestamp: timestamp ?? _timestamp,
+        message: message ?? _message,
+        items: items ?? _items,
+        meta: meta ?? _meta,
+      );
+
   num? get code => _code;
+
   bool? get success => _success;
+
   num? get timestamp => _timestamp;
+
   String? get message => _message;
+
   List<Items>? get items => _items;
+
   Meta? get meta => _meta;
 
   Map<String, dynamic> toJson() {
@@ -74,7 +86,6 @@ TodoListModel copyWith({  num? code,
     }
     return map;
   }
-
 }
 
 /// total_items : 1
@@ -86,19 +97,20 @@ TodoListModel copyWith({  num? code,
 
 class Meta {
   Meta({
-      num? totalItems, 
-      num? totalPages, 
-      num? perPageItem, 
-      num? currentPage, 
-      num? pageSize, 
-      bool? hasMorePage,}){
+    num? totalItems,
+    num? totalPages,
+    num? perPageItem,
+    num? currentPage,
+    num? pageSize,
+    bool? hasMorePage,
+  }) {
     _totalItems = totalItems;
     _totalPages = totalPages;
     _perPageItem = perPageItem;
     _currentPage = currentPage;
     _pageSize = pageSize;
     _hasMorePage = hasMorePage;
-}
+  }
 
   Meta.fromJson(dynamic json) {
     _totalItems = json['total_items'];
@@ -108,30 +120,41 @@ class Meta {
     _pageSize = json['page_size'];
     _hasMorePage = json['has_more_page'];
   }
+
   num? _totalItems;
   num? _totalPages;
   num? _perPageItem;
   num? _currentPage;
   num? _pageSize;
   bool? _hasMorePage;
-Meta copyWith({  num? totalItems,
-  num? totalPages,
-  num? perPageItem,
-  num? currentPage,
-  num? pageSize,
-  bool? hasMorePage,
-}) => Meta(  totalItems: totalItems ?? _totalItems,
-  totalPages: totalPages ?? _totalPages,
-  perPageItem: perPageItem ?? _perPageItem,
-  currentPage: currentPage ?? _currentPage,
-  pageSize: pageSize ?? _pageSize,
-  hasMorePage: hasMorePage ?? _hasMorePage,
-);
+
+  Meta copyWith({
+    num? totalItems,
+    num? totalPages,
+    num? perPageItem,
+    num? currentPage,
+    num? pageSize,
+    bool? hasMorePage,
+  }) =>
+      Meta(
+        totalItems: totalItems ?? _totalItems,
+        totalPages: totalPages ?? _totalPages,
+        perPageItem: perPageItem ?? _perPageItem,
+        currentPage: currentPage ?? _currentPage,
+        pageSize: pageSize ?? _pageSize,
+        hasMorePage: hasMorePage ?? _hasMorePage,
+      );
+
   num? get totalItems => _totalItems;
+
   num? get totalPages => _totalPages;
+
   num? get perPageItem => _perPageItem;
+
   num? get currentPage => _currentPage;
+
   num? get pageSize => _pageSize;
+
   bool? get hasMorePage => _hasMorePage;
 
   Map<String, dynamic> toJson() {
@@ -144,11 +167,10 @@ Meta copyWith({  num? totalItems,
     map['has_more_page'] = _hasMorePage;
     return map;
   }
-
 }
 
 /// _id : "65784ca3a3bd83b088b3b01b"
-/// title : "frist"
+/// title : "first"
 /// description : "First"
 /// is_completed : true
 /// created_at : "2023-12-12T12:05:55.507Z"
@@ -156,19 +178,20 @@ Meta copyWith({  num? totalItems,
 
 class Items {
   Items({
-      String? id, 
-      String? title, 
-      String? description, 
-      bool? isCompleted, 
-      String? createdAt, 
-      String? updatedAt,}){
+    String? id,
+    String? title,
+    String? description,
+    bool? isCompleted,
+    String? createdAt,
+    String? updatedAt,
+  }) {
     _id = id;
     _title = title;
     _description = description;
     _isCompleted = isCompleted;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-}
+  }
 
   Items.fromJson(dynamic json) {
     _id = json['_id'];
@@ -178,30 +201,41 @@ class Items {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
+
   String? _id;
   String? _title;
   String? _description;
   bool? _isCompleted;
   String? _createdAt;
   String? _updatedAt;
-Items copyWith({  String? id,
-  String? title,
-  String? description,
-  bool? isCompleted,
-  String? createdAt,
-  String? updatedAt,
-}) => Items(  id: id ?? _id,
-  title: title ?? _title,
-  description: description ?? _description,
-  isCompleted: isCompleted ?? _isCompleted,
-  createdAt: createdAt ?? _createdAt,
-  updatedAt: updatedAt ?? _updatedAt,
-);
+
+  Items copyWith({
+    String? id,
+    String? title,
+    String? description,
+    bool? isCompleted,
+    String? createdAt,
+    String? updatedAt,
+  }) =>
+      Items(
+        id: id ?? _id,
+        title: title ?? _title,
+        description: description ?? _description,
+        isCompleted: isCompleted ?? _isCompleted,
+        createdAt: createdAt ?? _createdAt,
+        updatedAt: updatedAt ?? _updatedAt,
+      );
+
   String? get id => _id;
+
   String? get title => _title;
+
   String? get description => _description;
+
   bool? get isCompleted => _isCompleted;
+
   String? get createdAt => _createdAt;
+
   String? get updatedAt => _updatedAt;
 
   Map<String, dynamic> toJson() {
@@ -214,5 +248,4 @@ Items copyWith({  String? id,
     map['updated_at'] = _updatedAt;
     return map;
   }
-
 }
