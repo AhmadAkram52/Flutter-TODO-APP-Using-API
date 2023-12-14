@@ -15,7 +15,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 9), () {
+    Timer(const Duration(seconds: 6), () {
       navigateToListScreen();
     });
     super.initState();
@@ -39,19 +39,21 @@ class _SplashScreenState extends State<SplashScreen> {
                   repeatForever: true,
                   animatedTexts: [
                     TyperAnimatedText(
-                      speed: const Duration(milliseconds: 500),
-                      textStyle: const TextStyle(),
+                      speed: const Duration(milliseconds: 300),
+                      textStyle: const TextStyle(fontFamily: 'Abril'),
                       'TODO',
                     ),
                     WavyAnimatedText(
                       'TODO',
-                      speed: const Duration(milliseconds: 500),
+                      textStyle: const TextStyle(fontFamily: 'Abril'),
+                      speed: const Duration(milliseconds: 300),
                     ),
                     ColorizeAnimatedText(
                       'TODO',
                       colors: TColors.colorizeColors,
-                      textStyle: const TextStyle(fontSize: 100),
-                      speed: const Duration(seconds: 1),
+                      textStyle:
+                          const TextStyle(fontSize: 100, fontFamily: 'Abril'),
+                      speed: const Duration(milliseconds: 500),
                     ),
                   ],
                 ),

@@ -86,6 +86,10 @@ class TodoListModel {
     }
     return map;
   }
+
+  set meta(Meta? value) {
+    _meta = value;
+  }
 }
 
 /// total_items : 1
@@ -166,6 +170,10 @@ class Meta {
     map['page_size'] = _pageSize;
     map['has_more_page'] = _hasMorePage;
     return map;
+  }
+
+  set currentPage(num? value) {
+    _currentPage = value;
   }
 }
 

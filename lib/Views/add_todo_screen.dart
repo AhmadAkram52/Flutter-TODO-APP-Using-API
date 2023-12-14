@@ -94,8 +94,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       desError = "Fill This Field";
       setState(() {});
     } else {
-      TService.postTodoList(
-          title: title, description: description, context: context);
+      Navigator.pop(context, true);
+      TService.postTodoList(title: title, description: description);
     }
   }
 
@@ -113,11 +113,8 @@ class _AddTodoScreenState extends State<AddTodoScreen> {
       desError = "Fill This Field";
       setState(() {});
     } else {
-      TService.editById(
-          id: widget.id,
-          title: title,
-          description: description,
-          context: context);
+      Navigator.pop(context, true);
+      TService.editById(id: widget.id, title: title, description: description);
     }
   }
 }

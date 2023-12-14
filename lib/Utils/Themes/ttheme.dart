@@ -9,6 +9,7 @@ class TTheme {
   static final ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
+    // fontFamily: 'Abril',
     floatingActionButtonTheme: BtnThemes.lightFloatingBtn,
     appBarTheme: TAppBarTheme.lightAppbar,
     inputDecorationTheme: TextFieldTheme.lightTextField,
@@ -24,6 +25,7 @@ class TTheme {
   static final ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
+    // fontFamily: 'Abril',
     floatingActionButtonTheme: BtnThemes.darkFloatingBtn,
     appBarTheme: TAppBarTheme.darkAppbar,
     inputDecorationTheme: TextFieldTheme.darkTextField,

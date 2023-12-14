@@ -11,16 +11,35 @@ class TService {
     final response = await http.get(Uri.parse(TUrls.getUrl));
     final data = jsonDecode(response.body.toString());
     if (response.statusCode == 200) {
-      return TodoListModel.fromJson(data);
+      final todoListModel = TodoListModel.fromJson(data);
+      while (todoListModel.meta?.hasMorePage == true) {
+        final nextPageResponse = await http.get(Uri.parse(
+            '${TUrls.getUrl}?page=${todoListModel.meta!.currentPage! + 1}'));
+        if (nextPageResponse.statusCode == 200) {
+          final nextPageModel =
+              TodoListModel.fromJson(json.decode(nextPageResponse.body));
+
+          // Append items from the next page
+          todoListModel.items?.addAll(nextPageModel.items!);
+
+          // Update meta information for the current page
+          todoListModel.meta = nextPageModel.meta;
+
+          // Update the current page number
+          todoListModel.meta!.currentPage = nextPageModel.meta!.currentPage;
+        } else {
+          throw Exception('Failed to load todo list');
+        }
+      }
+
+      return todoListModel;
     } else {
       return TodoListModel();
     }
   }
 
   static Future<void> postTodoList(
-      {required String title,
-      required String description,
-      required BuildContext context}) async {
+      {required String title, required String description}) async {
     final todoBody = {
       "title": title,
       "description": description,
@@ -38,9 +57,6 @@ class TService {
           backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0);
-      if (context.mounted) {
-        Navigator.pop(context, true);
-      }
     } else {
       Fluttertoast.showToast(
           msg: "Failed!",
@@ -55,8 +71,7 @@ class TService {
   static Future editById(
       {required String? id,
       required String title,
-      required String description,
-      required BuildContext context}) async {
+      required String description}) async {
     final todoBody = {
       "title": title,
       "description": description,
@@ -77,9 +92,6 @@ class TService {
           backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0);
-      if (context.mounted) {
-        Navigator.pop(context, true);
-      }
     } else {
       Fluttertoast.showToast(
           msg: "Update Error ! $id",

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo/Models/GetListModel.dart';
 import 'package:todo/Services/service.dart';
-import 'package:todo/Utils/navigators.dart';
+import 'package:todo/Utils/navigators_helper.dart';
 import 'package:todo/Views/add_todo_screen.dart';
 import 'package:todo/Views/my_shimmer.dart';
 
@@ -43,73 +43,81 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       await TService.getTodoList();
                       setState(() {});
                     },
-                    child: ListView.builder(
-                        itemCount: snapshot.data!.meta!.totalItems?.toInt(),
-                        itemBuilder: (context, i) {
-                          return Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: InkWell(
-                              onTap: () {
-                                id = snapshot.data!.items![i].id;
-                                title = snapshot.data!.items![i].title;
-                                des = snapshot.data!.items![i].description;
-                                TNavigators.navigateToCompleteView(
-                                    title: title.toString(),
-                                    context: context,
-                                    description: des.toString());
-                              },
-                              child: ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundColor: Colors.black,
-                                    child: Text(
-                                      "${i + 1}",
-                                      style:
-                                          const TextStyle(color: Colors.white),
+                    child: Visibility(
+                      visible: snapshot.data!.items!.isNotEmpty,
+                      replacement: const Center(
+                        child: Text("No Items"),
+                      ),
+                      child: ListView.builder(
+                          itemCount: snapshot.data!.items!.length,
+                          itemBuilder: (context, i) {
+                            return Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap: () {
+                                  id = snapshot.data!.items![i].id;
+                                  title = snapshot.data!.items![i].title;
+                                  des = snapshot.data!.items![i].description;
+                                  TNavigators.navigateToCompleteView(
+                                      title: title.toString(),
+                                      context: context,
+                                      description: des.toString());
+                                },
+                                child: ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.black,
+                                      child: Text(
+                                        "${i + 1}",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'Abril'),
+                                      ),
                                     ),
-                                  ),
-                                  title: Text(snapshot.data!.items![i].title
-                                      .toString()),
-                                  subtitle: Text(
-                                      snapshot.data!.items![i].description!
-                                          .replaceAll('\n', " ")
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      textDirection: TextDirection.ltr),
-                                  trailing: PopupMenuButton(
-                                    onSelected: (v) {
-                                      id = snapshot.data!.items![i].id;
-                                      title = snapshot.data!.items![i].title;
-                                      des =
-                                          snapshot.data!.items![i].description;
-                                      if (v == "Edit") {
-                                        navigateToEditPage(
-                                          title: title.toString(),
-                                          id: id.toString(),
-                                          description: des.toString(),
-                                        );
-                                      } else if (v == 'Delete') {
-                                        showDeleteDialog(
-                                            context: context,
+                                    title: Text(snapshot.data!.items![i].title
+                                        .toString()),
+                                    subtitle: Text(
+                                        snapshot.data!.items![i].description!
+                                            .replaceAll('\n', " ")
+                                            .toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        textDirection: TextDirection.ltr),
+                                    trailing: PopupMenuButton(
+                                      onSelected: (v) {
+                                        id = snapshot.data!.items![i].id;
+                                        title = snapshot.data!.items![i].title;
+                                        des = snapshot
+                                            .data!.items![i].description;
+                                        if (v == "Edit") {
+                                          navigateToEditPage(
                                             title: title.toString(),
-                                            id: id.toString());
-                                      }
-                                    },
-                                    itemBuilder: (context) {
-                                      return [
-                                        const PopupMenuItem(
-                                          value: "Edit",
-                                          child: Center(child: Text("Edit")),
-                                        ),
-                                        const PopupMenuItem(
-                                          value: "Delete",
-                                          child: Center(child: Text("Delete")),
-                                        ),
-                                      ];
-                                    },
-                                  )),
-                            ),
-                          );
-                        }),
+                                            id: id.toString(),
+                                            description: des.toString(),
+                                          );
+                                        } else if (v == 'Delete') {
+                                          showDeleteDialog(
+                                              context: context,
+                                              title: title.toString(),
+                                              id: id.toString());
+                                        }
+                                      },
+                                      itemBuilder: (context) {
+                                        return [
+                                          const PopupMenuItem(
+                                            value: "Edit",
+                                            child: Center(child: Text("Edit")),
+                                          ),
+                                          const PopupMenuItem(
+                                            value: "Delete",
+                                            child:
+                                                Center(child: Text("Delete")),
+                                          ),
+                                        ];
+                                      },
+                                    )),
+                              ),
+                            );
+                          }),
+                    ),
                   );
                 }
               },
@@ -136,16 +144,16 @@ class _TodoListScreenState extends State<TodoListScreen> {
         elevation: 50,
         actions: [
           TextButton(
-            child: const Text('Yes'),
+            child: const Text('No'),
             onPressed: () {
-              TService.deleteById(id: id);
               Navigator.pop(context);
               setState(() {});
             },
           ),
           TextButton(
-            child: const Text('No'),
+            child: const Text('Yes'),
             onPressed: () {
+              TService.deleteById(id: id);
               Navigator.pop(context);
               setState(() {});
             },
